@@ -1,8 +1,8 @@
-package TEST;
+package constructor;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+public class MainEmployeeData {
 
 	 public static void main(String[] args) {
 	        Scanner input = new Scanner(System.in);
