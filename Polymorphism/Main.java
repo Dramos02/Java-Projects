@@ -149,5 +149,5 @@ public class Main {
     
 }
 
-//Coded by Dominic O. Ramos 2BSIT-2 OOP
+//Copyrights © https://github.com/Dramos02
 
