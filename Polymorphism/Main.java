@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+	//I used this regular expression patter for my  email validation and make it global variable
+	static String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     public static void main(String[] args) {
     	//this arraylist consists of the employee's information
         ArrayList<Company> companyList = new ArrayList<>();
@@ -22,11 +24,17 @@ public class Main {
     		String id = validateNotEmpty(string,"Enter Employee's ID: ");
     		int age = validatePositiveInt(integer,"Enter Employee's Age: ");
 
-            
             String streetBrgy = validateNotEmpty(string,"Enter Employee's Street/Barangay: ");
     		String cityMunicipality = validateNotEmpty(string,"Enter Employee's City/Municipality: ");
     		String province = validateNotEmpty(string,"Enter Employee's Province: ");
-    		String email = validateNotEmpty(string,"Enter Employee's Email address: ");
+    		
+    		String email;
+    		do {
+    			email = validateNotEmpty(string, "Enter Employee's Email address: ");
+    			if (!email.matches(regex)) {
+    				System.out.println("\nPlease include @ on Employee's Email Address\n");
+    			}
+    		} while (!email.matches(regex));
     		String contactNum = validateNotEmpty(string,"Enter Employee's Contact No: ");
     		
     		String sssNo = validateNotEmpty(string,"Enter Employee's SSS#: ");
@@ -79,6 +87,7 @@ public class Main {
     
     public static String validateNotEmpty(Scanner scanner, String prompt) {
         String input;
+        
         do {
         	//prompt acts the user's input from the scanner
             System.out.print(prompt);
