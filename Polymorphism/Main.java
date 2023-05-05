@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-	//I used this regular expression patter for my  email validation and make it global variable
+	//I used this regular expression pattern for my  email validation and make it global variable
 	static String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     public static void main(String[] args) {
     	//this arraylist consists of the employee's information
