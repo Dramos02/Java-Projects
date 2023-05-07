@@ -41,8 +41,8 @@ class Manager extends Company {
     public void displayInfo() {
     	System.out.println("\n--------------Employee Type: " + employeeType.toUpperCase() + "-------------------\n");
         super.displayInfo();
-        System.out.println("Employee's Team: \t\t\t" + getTeam());
-        System.out.println("Employee's Deptcode: \t\t\t" + getDeptCode() + "\n");
+        System.out.println("Employee's Team: \t\t\t" + getTeam().toUpperCase());
+        System.out.println("Employee's Deptcode: \t\t\t" + getDeptCode().toUpperCase() + "\n");
     	System.out.println("---------------------------------------------------------\n");
         
     }
