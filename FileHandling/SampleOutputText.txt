@@ -1,0 +1,6 @@
+Absolute path: C:\Users\user\eclipse-workspace\Java Project\..\Java Project\src\FileHandling\SampleText.txt
+File size in bytes 57
+Number of words present in given file: 11
+Absolute path: C:\Users\user\eclipse-workspace\Java Project\..\Java Project\src\FileHandling\SampleText.txt
+File size in bytes 107
+Number of words present in given file: 21

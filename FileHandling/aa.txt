@@ -1,0 +1,3 @@
+Absolute path: C:\Users\user\eclipse-workspace\Java Project\..\Java Project\src\FileHandling\aa.txt
+File size in bytes 50
+Number of words present in given file: 11
