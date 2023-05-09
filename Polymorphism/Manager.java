@@ -46,4 +46,5 @@ class Manager extends Company {
     	System.out.println("---------------------------------------------------------\n");
         
     }
+	// Copyrights © https://github.com/Dramos02
 }
