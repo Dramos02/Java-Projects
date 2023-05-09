@@ -296,4 +296,5 @@ class Company {
 		System.out.println("Employee's NET PAY=>\t\t\t" + getNetPay());
 		System.out.println("---------------------------------------------------------\n");
     }
+	// Copyrights © https://github.com/Dramos02
 }
