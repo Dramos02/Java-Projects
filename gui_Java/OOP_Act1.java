@@ -173,5 +173,6 @@ class OOP_Activity1 {
 				pushFunction += "Total is " + total + "\nAverage is " + average;
 			}
 	}
+	//Copyrights © https://github.com/Dramos02
 }
 
