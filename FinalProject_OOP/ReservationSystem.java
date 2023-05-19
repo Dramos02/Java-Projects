@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ReservationSystem extends Restaurant {
-
-	private ArrayList<Restaurant> reservations;
+//extends the parent class to its sub class to be come more powerful - ReservationSystem
+	
+	private ArrayList<Restaurant> reservations; //first initializes Arraylist to get from parent class
 	static Scanner string = new Scanner(System.in); // this scanner used for string
     static Scanner integer = new Scanner(System.in);// this scanner used for int/integer
 
-    public ReservationSystem() {
-    	
-		 super("", "", "", 0, 0);
-		 reservations = new ArrayList<>();
+    ReservationSystem() {
+		 super("", "", "", 0, 0); // get the initialized value from parent class
+		 reservations = new ArrayList<>(); // setting up the arraylist from the constructor
     }
 
+    @Override
     public void displayDetails() {
     	
         if (reservations.isEmpty()) {
@@ -28,13 +29,15 @@ public class ReservationSystem extends Restaurant {
     }
     
     public void makeReservation() {
-    	
+    	//this will get user's input to make reservation and 
+    	//I used my method to validates user's input
     	String name = validateNotEmpty(string,"Enter name: ");
         String date = validateDate(string, "Enter date (Format: MMM or MMMM DD, YYYY): ");
-    	String time = validateTime(string, "Enter time: (Format: 00:00 [am/pm-AM/PM] ");
+    	String time = validateTime(string, "Enter time: (Format: HH:MM [am/pm-AM/PM] ");
     	int numAdults = validatePositiveInt(integer,"Enter number of adults: ");
     	int numChildren = validatePositiveInt(integer,"Enter number of children: ");
 
+    	//this object will add it to arraylist and set values
         Restaurant reservation = new Restaurant(name, date, time, numAdults, numChildren);
         reservations.add(reservation);
 
@@ -42,7 +45,7 @@ public class ReservationSystem extends Restaurant {
     }
 
     public void viewReservations() {
-    	
+    	//this acts like the displayDetails() method but i edited to be more precise
         if (reservations.isEmpty()) {
             System.out.println("Sorry, But No Reservations found.");
         } else {
@@ -60,9 +63,10 @@ public class ReservationSystem extends Restaurant {
     }
 
     public void updateReservation() {
-
+    	//another validations included here
     	int id = validatePositiveInt(integer, "Enter reservation ID to update: ");
     	
+    	//this one is set to target the id_Number of the reservation to be updated
         Restaurant reservationToUpdate = null;
         for (Restaurant reservation : reservations) {
             if (reservation.getIdNumber() == id) {
@@ -70,11 +74,9 @@ public class ReservationSystem extends Restaurant {
                 break;
             }
         }
-
+        
+        //this one to update the previous details from reservation
         if (reservationToUpdate != null) {
-            System.out.println("Current details:");
-            reservationToUpdate.displayDetails();
-
             System.out.println("Enter new details:");
 
             String name = validateNotEmpty(string,"Enter name: ");
@@ -99,9 +101,10 @@ public class ReservationSystem extends Restaurant {
     }
     
     public void deleteReservation() {
-
+    	//another validation included
     	int id = validatePositiveInt(integer,"Enter reservation ID to delete: ");
 
+    	//to target again the specific reservation
         Restaurant reservationToRemove = null;
         for (Restaurant reservation : reservations) {
     	   if (reservation.getIdNumber() == id) {
@@ -109,7 +112,7 @@ public class ReservationSystem extends Restaurant {
     	         break;
     	      }
     	  }
-
+        	//to delete the reservation and give notify the idnumber and its corresponding name
     	   if (reservationToRemove != null) {
     	       reservations.remove(reservationToRemove);
     	        System.out.println("Reservation ID: " + reservationToRemove.getIdNumber() + " for " + reservationToRemove.getName() + " deleted successfully.");
@@ -125,7 +128,7 @@ public class ReservationSystem extends Restaurant {
     	}
 
     public void generateReport() {
-    	
+    //initializes the variables that is need to generateReports
     	int totalAdults = 0;
         int totalChildren = 0;
         int grandTotal = 0;
@@ -149,7 +152,7 @@ public class ReservationSystem extends Restaurant {
 
          System.out.println("Total Adults: " + totalAdults);
          System.out.println("Total Children: " + totalChildren);
-         System.out.println("Grand Total: " + grandTotal + " (including taxes, etc.)");
+         System.out.println("Grand Total: " + grandTotal);
      }
     
     public static String validateNotEmpty(Scanner scanner, String prompt) {
@@ -168,7 +171,6 @@ public class ReservationSystem extends Restaurant {
         } while (input.isEmpty());
         return input;
     }
-    //this method is most likely like my method validatepostiveFloat the difference between them is that this method
     //validates the integer user's input
     public static int validatePositiveInt(Scanner scanner, String prompt) {
     	
@@ -194,8 +196,9 @@ public class ReservationSystem extends Restaurant {
         } while (input <= 0);
         return input;
     }
-  
+    //validates the Date if its empty and the format is satisfied
     public static String validateDate(Scanner scanner, String prompt) {
+
         String input;
         String regex = "(?i)^(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec) (\\d{1,2}), (\\d{4})$";
 
@@ -203,9 +206,9 @@ public class ReservationSystem extends Restaurant {
             System.out.print(prompt);
             input = scanner.nextLine().trim();
             if (input.isEmpty()) {
-                System.out.println("Please don't leave it blank.\n");
+                System.out.println("\nPlease don't leave it blank.\n");
             } else if (!input.matches(regex)) {
-                System.out.println("Invalid input. "
+                System.out.println("\nSorry Invalid input. "
                 		+ "\nDate should be in the format of 3-letter abbreviation month (ex: Jan)"
                 		+ "\nor 4-letter abbreviation month (ex: Sept)"
                 		+ "\nor full month name (ex: February),"
@@ -214,7 +217,9 @@ public class ReservationSystem extends Restaurant {
         } while (input.isEmpty() || !input.matches(regex));
         return input;
     }
+    //validates the Time if its empty and the format is satisfied
     public static String validateTime(Scanner scanner, String prompt) {
+
         String input;
         String regex = "^(0[1-9]|1[0-2]):[0-5][0-9] [APap][mM]$";
 
@@ -222,13 +227,34 @@ public class ReservationSystem extends Restaurant {
             System.out.print(prompt);
             input = scanner.nextLine().trim();
             if (input.isEmpty()) {
-                System.out.println("Please don't leave it blank.\n");
+                System.out.println("\nPlease don't leave it blank.\n");
             } else if (!input.matches(regex)) {
-                System.out.println("Invalid input. Time should be in the format of HH:MM AM/PM (e.g., 09:30 AM).\n");
+                System.out.println("\nSorry Invalid input. "
+                		+ "\nTime should be in the format of "
+                		+ "\nHH:MM AM/PM (ex:, 09:30 AM).\n");
             }
         } while (input.isEmpty() || !input.matches(regex));
         return input;
     }
+    //validates the char Option in RestauratnReservationApplication if its empty
+	public static char validateOption(String prompt) {
+	    char option = 0;
+	    do {
+	        System.out.print(prompt);
+	        String input = string.nextLine().trim().toLowerCase();
+	        if (input.isEmpty()) {
+	            System.out.print("\nOption cannot be empty. Please try again.\n"
+	            		+ "\nEnter your choice from [a-f || A-F]: "
+	            		);
+	            continue;
+	        }
+	        option = input.charAt(0);
+	        if (option < 'a' || option > 'f') {
+	            System.out.println("\nInvalid option. Please enter a valid option (a-f).");
+	        }
+	    } while (option < 'a' || option > 'f');
+	    return option;
+	}
 }
 
 
