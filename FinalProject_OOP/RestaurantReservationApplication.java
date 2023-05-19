@@ -16,8 +16,7 @@ public class RestaurantReservationApplication {
 	            System.out.println("e. Generate Report");
 	            System.out.println("f. Exit");
 	            System.out.print("Enter your choice from [a-f || A-F]: ");
-	            option = userInput.nextLine().toLowerCase().charAt(0);
-
+	            option = reservationSystem.validateOption("");
 	            switch (option) {
 	                case 'a':
 	                    reservationSystem.viewReservations();
