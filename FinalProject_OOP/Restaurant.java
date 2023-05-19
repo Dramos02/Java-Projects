@@ -1,6 +1,7 @@
 package FinalProject_OOP;
 
 class Restaurant {
+	//initializes the variables for parent class  - Restaurant
 	private static int reservationCounter = -1;
 	private int idNumber;
 	private String name;
@@ -9,6 +10,7 @@ class Restaurant {
 	private int numAdults;
 	private int numChildren;
 
+	//Constructor of the parent class - Restaurant 
 	Restaurant(String name, String date, String time, int numAdults, int numChildren) {
 	  this.idNumber = ++reservationCounter;
 	  this.name = name;
@@ -18,7 +20,7 @@ class Restaurant {
 	  this.numChildren = numChildren;
 	}
 
-	
+	//getter and setters of the constructor
 	public int getIdNumber() {
 		return idNumber;
 	}
@@ -78,7 +80,7 @@ class Restaurant {
 		this.numChildren = numChildren;
 	}
 
-
+	//this one to be override for polymorphism
 	public void displayDetails() {
 	}
 }
