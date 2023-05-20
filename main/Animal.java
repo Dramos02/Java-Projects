@@ -19,3 +19,4 @@ public class Animal {
 		System.out.println("The Dog's name is: " + animalName);
 	}
 }
+//Copyrights © https://github.com/Dramos02
