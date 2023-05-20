@@ -59,3 +59,4 @@ public class Main {
 	}
 
 }
+//Copyrights © https://github.com/Dramos02
