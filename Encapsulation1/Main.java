@@ -82,3 +82,4 @@ static String inputString(String checker) {
 	}
 
 }
+//Copyrights © https://github.com/Dramos02
