@@ -23,7 +23,7 @@ public class OutputFile2 {
 		
 		try 
 		{
-			newData.append("\nThis little light of mine, I�m gonna let it shine");
+			newData.append("\nThis little light of mine, I’m gonna let it shine");
 			newData.close();
 		} 
 		catch (IOException e) 
@@ -106,5 +106,5 @@ public class OutputFile2 {
 	}
 	
 }
-
+//Copyrights © https://github.com/Dramos02
 
