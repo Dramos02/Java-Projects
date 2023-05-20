@@ -32,7 +32,7 @@ public class OutputFile {
 	
         outputFile.println("Number of words present in given file: " + numOfWords());  		
 
-		  String data2 = "\nThis little light of mine, I�m gonna let it shine";
+		  String data2 = "\nThis little light of mine, I’m gonna let it shine";
 
 			try 
 {
@@ -105,7 +105,7 @@ public static int numOfWords()
 			return count;
 }
 }
-		
+//Copyrights © https://github.com/Dramos02		
 
 
 	
