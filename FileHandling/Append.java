@@ -5,7 +5,7 @@ public class Append {
 	
 	public static void main(String[] args)  throws FileNotFoundException
 	{
-			String data2 = "\nThis little light of mine, I�m gonna let it shine";
+			String data2 = "\nThis little light of mine, I’m gonna let it shine";
 
 			try 
 {
@@ -28,4 +28,4 @@ public class Append {
 }
 	
 
-
+//Copyrights © https://github.com/Dramos02
