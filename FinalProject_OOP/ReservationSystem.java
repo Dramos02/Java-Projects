@@ -1,5 +1,6 @@
 package FinalProject_OOP;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,7 +10,8 @@ public class ReservationSystem extends Restaurant {
 	private ArrayList<Restaurant> reservations; //first initializes Arraylist to get from parent class
 	static Scanner string = new Scanner(System.in); // this scanner used for string
     static Scanner integer = new Scanner(System.in);// this scanner used for int/integer
-
+    static DecimalFormat df = new DecimalFormat("#######.00"); //this formats the subtotal and grandtotal of generate report
+    
     ReservationSystem() {
 		 super("", "", "", 0, 0); // get the initialized value from parent class
 		 reservations = new ArrayList<>(); // setting up the arraylist from the constructor
@@ -33,7 +35,7 @@ public class ReservationSystem extends Restaurant {
     	//I used my method to validates user's input
     	String name = validateNotEmpty(string,"Enter name: ");
         String date = validateDate(string, "Enter date (Format: MMM or MMMM DD, YYYY): ");
-    	String time = validateTime(string, "Enter time: (Format: HH:MM [am/pm-AM/PM] ");
+    	String time = validateTime(string, "Enter time: (Format: HH:MM [am/pm-AM/PM]: ");
     	int numAdults = validatePositiveInt(integer,"Enter number of adults: ");
     	int numChildren = validatePositiveInt(integer,"Enter number of children: ");
 
@@ -49,15 +51,19 @@ public class ReservationSystem extends Restaurant {
         if (reservations.isEmpty()) {
             System.out.println("Sorry, But No Reservations found.");
         } else {
-            System.out.println("Reservations:");
-            for (Restaurant reservation : reservations) {
-                System.out.println("Reservation ID: " + reservation.getIdNumber());
-                System.out.println("Name: " + reservation.getName());
-                System.out.println("Date: " + reservation.getDate());
-                System.out.println("Time: " + reservation.getTime().toUpperCase());
-                System.out.println("Number of Adults: " + reservation.getNumAdults());
-                System.out.println("Number of Children: " + reservation.getNumChildren());
-                System.out.println();
+        	 System.out.println("\t\t\t\t\tRestaurant Reservation System");
+             System.out.println("Reservation ID   Name                 Time                    Date               Adults     Children");
+             System.out.println("------------------------------------------------------------------------------------------------------");
+             for (Restaurant reservation : reservations) {
+                 String id = String.valueOf(reservation.getIdNumber());
+                 String name = reservation.getName();
+                 String time = reservation.getTime().toUpperCase();
+                 String date = reservation.getDate();
+                 String adults = String.valueOf(reservation.getNumAdults());
+                 String children = String.valueOf(reservation.getNumChildren());
+
+                 System.out.format("%-17s%-21s%-24s%-19s%-10s%-10s%n", id, name, time, date, adults, children);
+                 
             }
         }
     }
@@ -82,10 +88,10 @@ public class ReservationSystem extends Restaurant {
             String name = validateNotEmpty(string,"Enter name: ");
             reservationToUpdate.setName(name);
 
-            String date = validateNotEmpty(string,"Enter date: ");
+            String date = validateDate(string,"Enter date: ");
             reservationToUpdate.setDate(date);
 
-            String time = validateNotEmpty(string,"Enter time: ");
+            String time = validateTime(string,"Enter time: ");
             reservationToUpdate.setTime(time);
 
             int numAdults = validatePositiveInt(integer,"Enter number of adults: ");
@@ -137,23 +143,30 @@ public class ReservationSystem extends Restaurant {
      if (reservations.isEmpty()) {
         System.out.println("No reservations found.");
          return;
-     }
-    	 
-     
-    for (Restaurant reservation : reservations) {
-         int reservationSubtotal = (reservation.getNumAdults() * 500) + (reservation.getNumChildren() * 300);
-       	 reservation.displayDetails();
-        	 
-             totalAdults += reservation.getNumAdults();
-             totalChildren += reservation.getNumChildren();
-             grandTotal += reservationSubtotal;
-             System.out.println();
-         }
+     }else {
+    	  System.out.println("\t\t\t\t\tRestaurant Reservation System [ GENERATED REPORT ]");
+          System.out.println("Reservation ID   Name                 Time                    Date               Adults     Children   Subtotal");
+          System.out.println("---------------------------------------------------------------------------------------------------------------");
 
-         System.out.println("Total Adults: " + totalAdults);
-         System.out.println("Total Children: " + totalChildren);
-         System.out.println("Grand Total: " + grandTotal);
+          for (Restaurant reservation : reservations) {
+              int reservationSubtotal = (reservation.getNumAdults() * 500) + (reservation.getNumChildren() * 300);
+              totalAdults += reservation.getNumAdults();
+              totalChildren += reservation.getNumChildren();
+              grandTotal += reservationSubtotal;
+
+              System.out.format("%-17s%-21s%-24s%-19s%-10s%-12s%-8s%n",
+                      reservation.getIdNumber(), reservation.getName(), reservation.getTime(),
+                      reservation.getDate(), reservation.getNumAdults(), reservation.getNumChildren(), df.format(reservationSubtotal));
+          }
+
+          System.out.println("---------------------------------------------------------------------------------------------------------------");
+          System.out.println("\nTotal number of Adults: " + totalAdults);
+          System.out.println("Total number of Kids: " + totalChildren);
+          System.out.println("Grand Total: PHP " + df.format(grandTotal));
+          
+          System.out.println("\n---------------------------------------------nothing follows---------------------------------------------------");
      }
+  }
     
     public static String validateNotEmpty(Scanner scanner, String prompt) {
     	
@@ -200,7 +213,7 @@ public class ReservationSystem extends Restaurant {
     public static String validateDate(Scanner scanner, String prompt) {
 
         String input;
-        String regex = "(?i)^(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec) (\\d{1,2}), (\\d{4})$";
+        String regex = "(?i)^(jan|feb|mar|apr|may|jun|june|jul|july|aug|sep|sept|oct|nov|dec) (\\d{1,2}), (\\d{4})$";
 
         do {
             System.out.print(prompt);
