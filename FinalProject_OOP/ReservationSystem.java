@@ -31,16 +31,21 @@ public class ReservationSystem extends Restaurant {
     }
     
     public void makeReservation() {
-    	//this will get user's input to make reservation and 
-    	//I used my method to validates user's input
-    	String name = validateNotEmpty(string,"Enter name: ");
+        String name = validateNotEmpty(string,"Enter name: ");
         String date = validateDate(string, "Enter date (Format: MMM or MMMM DD, YYYY): ");
-    	String time = validateTime(string, "Enter time: (Format: HH:MM [am/pm-AM/PM]: ");
-    	int numAdults = validatePositiveInt(integer,"Enter number of adults: ");
-    	int numChildren = validatePositiveInt(integer,"Enter number of children: ");
+        String time = validateTime(string, "Enter time: (Format: HH:MM [am/pm-AM/PM]: ");
+        int numAdults = validatePositiveInt(integer,"Enter number of adults: ");
+        int numChildren = validatePositiveInt(integer,"Enter number of children: ");
 
-    	//this object will add it to arraylist and set values
+        int idNumber;
+        if (reservations.isEmpty()) {
+            idNumber = 1;
+        } else {
+            idNumber = reservations.get(reservations.size() - 1).getIdNumber() + 1;
+        }
+
         Restaurant reservation = new Restaurant(name, date, time, numAdults, numChildren);
+        reservation.setIdNumber(idNumber);
         reservations.add(reservation);
 
         System.out.println("Reservation made successfully. Reservation ID: " + reservation.getIdNumber());
@@ -107,31 +112,31 @@ public class ReservationSystem extends Restaurant {
     }
     
     public void deleteReservation() {
-    	//another validation included
-    	int id = validatePositiveInt(integer,"Enter reservation ID to delete: ");
+    	    int id = validatePositiveInt(integer, "Enter reservation ID to delete: ");
 
-    	//to target again the specific reservation
-        Restaurant reservationToRemove = null;
-        for (Restaurant reservation : reservations) {
-    	   if (reservation.getIdNumber() == id) {
-    	         reservationToRemove = reservation;
-    	         break;
-    	      }
-    	  }
-        	//to delete the reservation and give notify the idnumber and its corresponding name
-    	   if (reservationToRemove != null) {
-    	       reservations.remove(reservationToRemove);
-    	        System.out.println("Reservation ID: " + reservationToRemove.getIdNumber() + " for " + reservationToRemove.getName() + " deleted successfully.");
+    	    Restaurant reservationToRemove = null;
+    	    for (Restaurant reservation : reservations) {
+    	        if (reservation.getIdNumber() == id) {
+    	            reservationToRemove = reservation;
+    	            break;
+    	        }
+    	    }
+
+    	    if (reservationToRemove != null) {
+    	        int removedReservationId = reservationToRemove.getIdNumber();
+    	        reservations.remove(reservationToRemove);
+    	        System.out.println("Reservation ID: " + removedReservationId + " for " + reservationToRemove.getName() + " deleted successfully.");
 
     	        // Adjust reservation IDs after deletion
-    	        for (int i = 0; i < reservations.size(); i++) {
-    	        	Restaurant reservation = reservations.get(i);
+    	        for (int i = removedReservationId - 1; i < reservations.size(); i++) {
+    	            Restaurant reservation = reservations.get(i);
     	            reservation.setIdNumber(i + 1);
     	        }
     	    } else {
-    	        System.out.println("Sorry, But your Reservation ID not found.");
+    	        System.out.println("Sorry, but your Reservation ID was not found.");
     	    }
     	}
+
 
     public void generateReport() {
     //initializes the variables that is need to generateReports
@@ -263,7 +268,8 @@ public class ReservationSystem extends Restaurant {
 	        }
 	        option = input.charAt(0);
 	        if (option < 'a' || option > 'f') {
-	            System.out.println("\nInvalid option. Please enter a valid option (a-f).");
+	            System.out.println("\nInvalid option. Please enter a valid option (a-f).\n"
+	            		+ "\nEnter your choice from [a-f || A-F]: ");
 	        }
 	    } while (option < 'a' || option > 'f');
 	    return option;
