@@ -34,8 +34,8 @@ public class ReservationSystem extends Restaurant {
         String name = validateNotEmpty(string,"Enter name: ");
         String date = validateDate(string, "Enter date (Format: MMM or MMMM DD, YYYY): ");
         String time = validateTime(string, "Enter time: (Format: HH:MM [am/pm-AM/PM]: ");
-        int numAdults = validatePositiveInt(integer,"Enter number of adults: ");
-        int numChildren = validatePositiveInt(integer,"Enter number of children: ");
+        int numAdults = validateGuest(integer,"Enter number of adults: ");
+        int numChildren = validateGuest(integer,"Enter number of children: ");
 
         int idNumber;
         if (reservations.isEmpty()) {
@@ -61,9 +61,9 @@ public class ReservationSystem extends Restaurant {
              System.out.println("------------------------------------------------------------------------------------------------------");
              for (Restaurant reservation : reservations) {
                  String id = String.valueOf(reservation.getIdNumber());
-                 String name = reservation.getName();
+                 String name = titleString(reservation.getName()); //dominic ramos - Dominic Ramos
                  String time = reservation.getTime().toUpperCase();
-                 String date = reservation.getDate();
+                 String date = titleString(reservation.getDate());
                  String adults = String.valueOf(reservation.getNumAdults());
                  String children = String.valueOf(reservation.getNumChildren());
 
@@ -90,19 +90,19 @@ public class ReservationSystem extends Restaurant {
         if (reservationToUpdate != null) {
             System.out.println("Enter new details:");
 
-            String name = validateNotEmpty(string,"Enter name: ");
+            String name = validateNotEmpty(string,"Enter new name: ");
             reservationToUpdate.setName(name);
 
-            String date = validateDate(string,"Enter date: ");
+            String date = validateDate(string,"Enter new date (Format: MMM or MMMM DD, YYYY):  ");
             reservationToUpdate.setDate(date);
 
-            String time = validateTime(string,"Enter time: ");
+            String time = validateTime(string,"Enter new time (Format: HH:MM [am/pm-AM/PM]: ");
             reservationToUpdate.setTime(time);
 
-            int numAdults = validatePositiveInt(integer,"Enter number of adults: ");
+            int numAdults = validateGuest(integer,"Enter new number of adults: ");
             reservationToUpdate.setNumAdults(numAdults);
 
-            int numChildren = validatePositiveInt(integer,"Enter number of children: ");
+            int numChildren = validateGuest(integer,"Enter new number of children: ");
             reservationToUpdate.setNumChildren(numChildren);
 
             System.out.println("Reservation ID: " + reservationToUpdate.getIdNumber() + " updated successfully.");
@@ -160,8 +160,8 @@ public class ReservationSystem extends Restaurant {
               grandTotal += reservationSubtotal;
 
               System.out.format("%-17s%-21s%-24s%-19s%-10s%-12s%-8s%n",
-                      reservation.getIdNumber(), reservation.getName(), reservation.getTime(),
-                      reservation.getDate(), reservation.getNumAdults(), reservation.getNumChildren(), df.format(reservationSubtotal));
+                      reservation.getIdNumber(), titleString(reservation.getName()), reservation.getTime().toUpperCase(),
+                      titleString(reservation.getDate()), reservation.getNumAdults(), reservation.getNumChildren(), df.format(reservationSubtotal));
           }
 
           System.out.println("---------------------------------------------------------------------------------------------------------------");
@@ -191,6 +191,7 @@ public class ReservationSystem extends Restaurant {
     }
     //validates the integer user's input
     public static int validatePositiveInt(Scanner scanner, String prompt) {
+
     	
         int input;
         do {
@@ -218,7 +219,8 @@ public class ReservationSystem extends Restaurant {
     public static String validateDate(Scanner scanner, String prompt) {
 
         String input;
-        String regex = "(?i)^(jan|feb|mar|apr|may|jun|june|jul|july|aug|sep|sept|oct|nov|dec) (\\d{1,2}), (\\d{4})$";
+        String regex = "(?i)^(jan|january|feb|february|mar|march|apr|april|may|jun|june|jul|july"
+        		+ "|aug|august|sep|sept|september|oct|october|nov|november|dec|december) (\\d{1,2}), (\\d{4})$";
 
         do {
             System.out.print(prompt);
@@ -256,6 +258,8 @@ public class ReservationSystem extends Restaurant {
     }
     //validates the char Option in RestauratnReservationApplication if its empty
 	public static char validateOption(String prompt) {
+
+
 	    char option = 0;
 	    do {
 	        System.out.print(prompt);
@@ -268,12 +272,54 @@ public class ReservationSystem extends Restaurant {
 	        }
 	        option = input.charAt(0);
 	        if (option < 'a' || option > 'f') {
-	            System.out.println("\nInvalid option. Please enter a valid option (a-f).\n"
+	            System.out.print("\nInvalid option. Please enter a valid option [a-f || A-F].\n"
 	            		+ "\nEnter your choice from [a-f || A-F]: ");
 	        }
 	    } while (option < 'a' || option > 'f');
 	    return option;
 	}
+	//capitilized the first letter to make it more presentable and uniform 
+	public static String titleString(String input) {
+
+
+        String[] words = input.split("\\s+");
+        StringBuilder result = new StringBuilder();
+
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                String capitalized = word.substring(0, 1).toUpperCase() + word.substring(1);
+                result.append(capitalized).append(" ");
+            }
+        }
+
+        return result.toString().trim();
+    }
+	//this validates the guest it will only accepts 0 - Positive/Absolute number
+	public static int validateGuest(Scanner scanner, String prompt) {
+
+    	
+        int input;
+        do {
+            System.out.print(prompt);
+            String inputString = scanner.nextLine().trim();
+            if (inputString.isEmpty()) {
+                System.out.println("\nPlease Don't Leave it Blank.\n");
+                input = -1;
+            } else {
+                try {
+                    input = Integer.parseInt(inputString);
+                    if (input < 0) {
+                        System.out.println("\nInvalid input. This should not contain negative value.\n");
+                        input = -1;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("\nInvalid input. This should not contain negative value.\n");
+                    input = -1;
+                }
+            }
+        } while (input < 0);
+        return input;
+    }
 }
 
 
